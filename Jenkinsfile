@@ -23,10 +23,12 @@ node{
       
     stage('Run Docker Image'){
           def dockerContainerName = 'javadedockerapp_$JOB_NAME_$BUILD_NUMBER'
-                      
-          def dockerRun= "sudo docker run -p 87:80 knackc123/${dockerImageName}" 
-            withCredentials([string(credentialsId: 'deploymentserverpwd', variable: 'dpPWD')]) {                  
-                  sh "sshpass -p ${dpPWD} ssh -o StrictHostKeyChecking=no root@52.66.110.193 ${dockerRun}"
+          def removeOldService = "sudo docker service rm udr"          
+          def dockerRun= "sudo docker service create --name udr --publish 80:80 knackc123/${dockerImageName}" 
+          
+            withCredentials([string(credentialsId: 'deploymentserverpwd', variable: 'dpPWD')]) {  
+                  sh "sshpass -p ${dpPWD} ssh -o StrictHostKeyChecking=no root@3.85.103.194 ${removeOldService}"
+                  sh "sshpass -p ${dpPWD} ssh -o StrictHostKeyChecking=no root@3.85.103.194 ${dockerRun}"
             }
             
       
