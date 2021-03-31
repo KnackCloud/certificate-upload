@@ -39,7 +39,7 @@ node{
       stage('Code Analysis'){
             steps{
              withSonarQubeEnv('SonarQube') {
-             sh "mvn clean verify sonar:sonar"
+             sh "${mvnHome}/bin/mvn clean verify sonar:sonar"
              }
             }
         }
