@@ -2,7 +2,7 @@ node{
       def dockerImageName= 'certification_udr_$JOB_NAME'
      
       stage('SCM Checkout'){
-         git 'https://github.com/KnackCloud/certification.git'
+         git 'https://github.com/KnackCloud/certificate-upload.git'
       }
       stage('Build'){
          // Get maven home path and build
