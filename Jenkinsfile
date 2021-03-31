@@ -9,7 +9,7 @@ node{
          def mvnHome =  tool name: 'Maven 3.5.4', type: 'maven'   
          sh "${mvnHome}/bin/mvn package -Dmaven.test.skip=true"
       }      
-      stage('Build Docker Image'){         
+      /*stage('Build Docker Image'){         
            sh "docker build -t ${dockerImageName} ."
       }  
    
@@ -35,7 +35,14 @@ node{
       }
       stage('Performance Test'){
             
-      }
+      }*/
+      stage('Code Analysis'){
+            steps{
+             withSonarQubeEnv('SonarQube') {
+             sh "mvn clean verify sonar:sonar"
+             }
+            }
+        }
       
          
   }
