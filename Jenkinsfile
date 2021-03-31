@@ -37,12 +37,10 @@ node{
             
       }*/
       stage('Code Analysis'){
-            steps{
              withSonarQubeEnv('SonarQube') {
              def mvnHome =  tool name: 'Maven 3.5.4', type: 'maven'
              sh "${mvnHome}/bin/mvn clean verify sonar:sonar"
              }
-            }
         }
       
          
