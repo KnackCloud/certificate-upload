@@ -30,12 +30,17 @@ node{
                   sh "sshpass -p ${dpPWD} ssh -o StrictHostKeyChecking=no root@3.85.103.194 ${removeOldService}"
                   sh "sshpass -p ${dpPWD} ssh -o StrictHostKeyChecking=no root@3.85.103.194 ${dockerRun}"
             }
+    }
+      stage('Performance Test'){
+            sh "sudo su"
+            sh "cd /home/ec2-user/jmeter/apache-jmeter-5.4.1/bin"
+            sh "sh /home/ec2-user/jmeter/apache-jmeter-5.4.1/bin/jmeter.sh -n -t /home/ec2-user/jmeter/apache-jmeter-5.4.1/bin/demo1udr.jmx -l /home/ec2-user/jmeter/apache-jmeter-5.4.1/bin/report.jtl"
+           
+      }
             
       
-      }
-      stage('Performance Test'){
-            
-     }
+      
+      
       /*stage('Code Analysis'){
              withSonarQubeEnv('SonarQube') {
              def mvnHome =  tool name: 'Maven 3.5.4', type: 'maven'
