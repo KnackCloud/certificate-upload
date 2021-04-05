@@ -27,22 +27,11 @@ node{
           def dockerRun= "sudo docker service create --name udr --publish 80:80 knackc123/${dockerImageName}" 
           
             withCredentials([string(credentialsId: 'deploymentserverpwd', variable: 'dpPWD')]) {  
-                  sh "sshpass -p ${dpPWD} ssh -o StrictHostKeyChecking=no root@3.85.103.194 ${removeOldService}"
-                  sh "sshpass -p ${dpPWD} ssh -o StrictHostKeyChecking=no root@3.85.103.194 ${dockerRun}"
+                  sh "sshpass -p ${dpPWD} ssh -o StrictHostKeyChecking=no root@34.229.191.169 ${removeOldService}"
+                  sh "sshpass -p ${dpPWD} ssh -o StrictHostKeyChecking=no root@34.229.191.169 ${dockerRun}"
             }
     }
-      stage('Performance Test'){
-            sh "sudo su"
-            sh "cd /home/ec2-user/jmeter/apache-jmeter-5.4.1/bin"
-            sh "sh /home/ec2-user/jmeter/apache-jmeter-5.4.1/bin/jmeter.sh -n -t /home/ec2-user/jmeter/apache-jmeter-5.4.1/bin/demo1udr.jmx -l /home/ec2-user/jmeter/apache-jmeter-5.4.1/bin/report.jtl"
-           
-      }
-       stage('Code Analysis'){
-             withSonarQubeEnv('SonarQube') {
-             def mvnHome =  tool name: 'Maven 3.5.4', type: 'maven'
-             sh "${mvnHome}/bin/mvn clean verify sonar:sonar"
-             }
-        }
+     
       
          
   }
